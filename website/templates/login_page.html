@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login Page</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: white;
+            margin:0; padding:0;
+        }
+        .container {
+            max-width:720px;
+            margin:40px auto;
+            padding:40px;
+            border:3px solid #f1f1f1;
+            border-radius:8px;
+            background:white;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        h1 { margin:0 0 18px 0; }
+        label { font-size:18px; display:block; margin:10px 0 6px; text-align:left; }
+        input[type=text], input[type=password], input[type=email] {
+            width:96%;
+            font-size:15px;
+            margin:6px 0 12px 0;
+            padding:12px 10px;
+            display:inline-block;
+            border:2px solid green;
+            border-radius:4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            padding:12px 18px;
+            color: black;
+            border: none;
+            font-size:15px;
+            border-radius:4px;
+            cursor:pointer;
+            margin-top:8px;
+        }
+        button:hover { opacity:0.9; }
+        .small-note { font-size:13px; color:#666; margin-top:10px; }
+        .error { background:#ffe6e6; border:1px solid #ffb3b3; color:#900; padding:10px; border-radius:4px; margin-bottom:12px; text-align:left; }
+        .links { margin-top:14px; }
+        @media (max-width:640px){
+            .container{ padding:20px; margin:20px; }
+            input[type=text], input[type=password] { width:100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login Form</h1>
+
+        {# show error if passed from view #}
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+
+            <label for="identity"><b>Email or First Name</b></label>
+            <input type="text" id="identity" name="identity" placeholder="Enter email or first name" required
+                   value="{{ identity|default:'' }}">
+
+            <label for="password"><b>Password</b></label>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+
+            <button type="submit">Login</button>
+
+            <div class="links">
+                Don't have an account? <a href="{% url 'signup' %}">Register</a>
+            </div>
+
+            <div class="small-note">You may login with either your registered email (if available) or your first name.</div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+{# templates/signup/signup_page.html #}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Farmer Registration</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        body{ font-family: Arial, Helvetica, sans-serif; background:#fff; margin:0; padding:0; }
+        .page-title{ text-align:center; margin:26px 0; }
+        form{ border:3px solid #f1f1f1; max-width:760px; margin:0 auto 40px; border-radius:8px; overflow:hidden;}
+        .container{ padding:30px 40px; box-sizing:border-box; }
+        label{ display:block; font-size:15px; margin-bottom:6px; }
+        input[type=text], input[type=password], input[type=email], select, textarea {
+            width:100%; padding:10px 12px; font-size:15px; margin:6px 0 14px 0; border:2px solid green; border-radius:4px; box-sizing:border-box;
+        }
+        textarea.large-address { min-height:120px; /* larger address box */ resize:vertical; }
+        .row{ display:flex; gap:16px; flex-wrap:wrap; align-items:flex-start; }
+        .col-50{ flex:1 1 48%; min-width:200px; }
+        .col-33{ flex:1 1 30%; min-width:160px; } /* small column for compact fields */
+        .full{ flex-basis:100%; }
+        .gender-inline { display:flex; gap:18px; align-items:center; }
+        .gender-inline label { margin:0; font-size:15px; display:flex; align-items:center; gap:6px; }
+        input[type=radio]{ margin:0; transform:scale(1.02); }
+        button{ background:#4CAF50; padding:12px 18px; border:none; color:#000; border-radius:4px; cursor:pointer; font-size:15px; }
+        .error{ background:#ffe6e6; border:1px solid #ffb3b3; color:#900; padding:10px; margin-bottom:12px; border-radius:4px; }
+        .help-text{ font-size:13px; color:#666; margin-top:-10px; margin-bottom:12px; }
+        @media (max-width:640px){ .col-50{ flex-basis:100%; } .col-33{ flex-basis:100%; } .container{ padding:18px; } }
+    </style>
+</head>
+<body>
+    <h1 class="page-title">Farmer Registration</h1>
+
+    <div class="container" style="max-width:760px;margin:0 auto;">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="{{ msg.tags }}">{{ msg }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {% load static %}
+
+            <div class="row">
+                <div class="col-50">
+                    <label for="first_name">First Name</label>
+                    <input id="first_name" name="first_name" type="text" placeholder="First name" required value="{{ form.first_name|default:'' }}">
+                </div>
+                <div class="col-50">
+                    <label for="last_name">Last Name</label>
+                    <input id="last_name" name="last_name" type="text" placeholder="Last name" required value="{{ form.last_name|default:'' }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-50">
+                    <label for="email">Email Address</label>
+                    <input id="email" name="email" type="email" placeholder="user@example.com" required value="{{ form.email|default:'' }}">
+                    <div class="help-text">Enter a valid email. This will be used for login and must be unique.</div>
+                </div>
+
+                <!-- Compact area: Gender + Farmer Type -->
+                <div class="col-50">
+                    <div style="display:flex; gap:12px; align-items:flex-start; flex-wrap:wrap;">
+                        <div style="flex:1 1 55%;">
+                            <label><b>Gender</b></label>
+                            <div class="gender-inline" role="radiogroup" aria-labelledby="gender">
+                                <label><input type="radio" name="gender" value="male" {% if form.gender == "male" %}checked{% endif %}> Male</label>
+                                <label><input type="radio" name="gender" value="female" {% if form.gender == "female" %}checked{% endif %}> Female</label>
+                            </div>
+                        </div>
+
+                        <div style="flex:1 1 40%;">
+                            <label for="farmer_type">Farmer Type</label>
+                            <select id="farmer_type" name="farmer_type" required>
+                                <option value="">-- Select --</option>
+                                <option value="smallholder" {% if form.farmer_type == "smallholder" %}selected{% endif %}>Smallholder</option>
+                                <option value="commercial" {% if form.farmer_type == "commercial" %}selected{% endif %}>Commercial</option>
+                                <option value="cooperative" {% if form.farmer_type == "cooperative" %}selected{% endif %}>Cooperative</option>
+                                <option value="tenant" {% if form.farmer_type == "tenant" %}selected{% endif %}>Tenant</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-50">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" placeholder="Choose a password" required>
+                    <div class="help-text">Password will be stored securely (hashed) on server.</div>
+                </div>
+
+                <div class="col-50">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="5" class="large-address" placeholder="Full address (village / street / area / landmark)" required>{{ form.address|default:'' }}</textarea>
+                </div>
+            </div>
+
+            <hr style="border:none;border-top:1px solid #eee;margin:12px 0 18px 0;">
+            <h3 style="margin:4px 0 12px 0;font-size:18px;">Farm Details</h3>
+
+            <div class="row">
+                <div class="col-50">
+                    <label for="farm_name">Farm / Plot Name (optional)</label>
+                    <input id="farm_name" name="farm_name" type="text" placeholder="Farm name or identifier" value="{{ form.farm_name|default:'' }}">
+                </div>
+
+                <div class="col-50">
+                    <label for="land_area">Land Area (e.g. 1.5 acres or 0.6 ha)</label>
+                    <input id="land_area" name="land_area" type="text" placeholder="Land area" required value="{{ form.land_area|default:'' }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="full">
+                    <label for="crops">Principal Crops / Produce</label>
+                    <input id="crops" name="crops" type="text" placeholder="e.g. Rice, Wheat, Mangoes" required value="{{ form.crops|default:'' }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="full">
+                    <label for="certification">Certification</label>
+                    <select id="certification" name="certification" required>
+                        <option value="">-- Select --</option>
+                        <option value="none" {% if form.certification == "none" %}selected{% endif %}>None</option>
+                        <option value="organic" {% if form.certification == "organic" %}selected{% endif %}>Organic certified</option>
+                        <option value="partial" {% if form.certification == "partial" %}selected{% endif %}>Partially certified</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-top:12px;">
+                <button type="submit">Sign up</button>
+                <span style="margin-left:12px;">Already an account? <a href="{% url 'login' %}">Login</a></span>
+            </div>
+
+            <p style="margin-top:14px;font-size:13px;color:#666;">Note: This form collects only the essential farmer details you requested.</p>
+        </form>
+    </div>
+</body>
+</html>
