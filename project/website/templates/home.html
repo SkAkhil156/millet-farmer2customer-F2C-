@@ -1,0 +1,169 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Millet Market</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#fdfcf7;
+    color:#333;
+}
+
+/* Header */
+.header{
+    background:#fff8e6;
+    border-bottom:3px solid #2e8b57;
+    padding:18px 40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+.logo-area img{
+    height:70px;
+    width:auto;
+}
+.logo-text{
+    font-size:30px;
+    font-weight:bold;
+    color:#2e8b57;
+}
+
+/* Hero Section */
+.hero{
+    max-width:1200px;
+    margin:70px auto;
+    display:flex;
+    gap:60px;
+    padding:0 30px;
+}
+.hero-left{
+    flex:1;
+}
+.hero-left h1{
+    font-size:44px;
+    color:#2e8b57;
+    margin-bottom:18px;
+}
+.hero-left p{
+    font-size:16px;
+    line-height:1.7;
+    margin-bottom:14px;
+}
+
+/* Role Card */
+.role-box{
+    flex:1;
+    background:#ffffff;
+    border:2px solid #dbe7df;
+    border-radius:14px;
+    padding:40px 30px;
+    text-align:center;
+}
+.role-box h2{
+    margin-bottom:20px;
+    font-size:26px;
+}
+.role-box p{
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+/* Buttons */
+.btn{
+    display:block;
+    width:80%;
+    margin:14px auto;
+    padding:15px;
+    font-size:16px;
+    border-radius:30px;
+    text-decoration:none;
+    color:#fff;
+    background:#2e8b57;
+    transition:0.2s;
+}
+.btn.customer{
+    background:#1f6f4a;
+}
+.btn:hover{
+    opacity:0.9;
+}
+
+/* Footer */
+.footer{
+    margin-top:80px;
+    padding:20px;
+    text-align:center;
+    font-size:14px;
+    color:#666;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo-area">
+        <!-- ✅ Correct static path -->
+        <img src="{% static 'images/logo.jpg' %}" alt="Millet Market Logo">
+        <div class="logo-text">Millet Market</div>
+    </div>
+</div>
+
+<!-- HERO SECTION -->
+<div class="hero">
+
+    <!-- LEFT CONTENT -->
+    <div class="hero-left">
+        <h1>Connecting Millet Farmers & Buyers</h1>
+
+        <p>
+            <b>Millet Market</b> is a digital platform where millet farmers can
+            sell their products directly to customers without intermediaries.
+        </p>
+
+        <p>
+            This platform helps farmers get <b>fair prices</b> for their produce
+            while customers receive <b>fresh and quality millets</b> directly
+            from trusted farmers.
+        </p>
+
+        <p>
+            Farmers list their millets, customers purchase directly,
+            and both benefit from transparent and fair trade.
+        </p>
+    </div>
+
+    <!-- RIGHT ROLE SELECTION -->
+    <div class="role-box">
+        <h2>Select Your Role</h2>
+        <p>Choose how you want to continue</p>
+
+        <a href="{% url 'farmer_signup:signup' %}" class="btn">
+            👨‍🌾 Continue as Farmer
+        </a>
+
+        <a href="{% url 'customer_signup:signup' %}" class="btn customer">
+            🛒 Continue as Customer
+        </a>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    © 2025 Millet Market | Direct Farmer to Customer Platform
+</div>
+
+</body>
+</html>

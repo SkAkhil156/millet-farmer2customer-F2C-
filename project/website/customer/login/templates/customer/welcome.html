@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Welcome</title>
+<style>
+body{font-family:Arial;padding:40px}
+.card{max-width:500px;margin:auto;text-align:center;border:1px solid #eee;padding:20px}
+</style>
+</head>
+
+<body>
+<div class="card">
+<h2>Welcome {{ customer_name }}</h2>
+<p>You are logged in as Customer.</p>
+<a href="{% url 'customer_login:login' %}">Logout</a>
+</div>
+</body>
+</html>
