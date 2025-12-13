@@ -1,30 +1,14 @@
-# website/urls.py
 from django.contrib import admin
-from django.urls import path
-from signup.views import signaction
-from login.views import loginaction
-
-# import the welcome view from login.views (we added this earlier)
-from login.views import welcome
-
-# ADD THESE TWO IMPORTS ↓
-from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Signup page
-    path('', signaction, name='home'),
-    path('signup/', signaction, name='signup'),
+    # Farmer
+    path('', include(('farmer.signup.urls', 'farmer_signup'), namespace='farmer_signup')),
+    path('farmer/login/', include(('farmer.login.urls', 'farmer_login'), namespace='farmer_login')),
 
-    # Login page
-    path('login/', loginaction, name='login'),
-
-    # Welcome page (needed so redirect('welcome') works)
-    path('welcome/', welcome, name='welcome'),
+    # Customer
+    path('customer/signup/', include(('customer.signup.urls', 'customer_signup'), namespace='customer_signup')),
+    path('customer/login/', include(('customer.login.urls', 'customer_login'), namespace='customer_login')),
 ]
-
-# THIS PART IS REQUIRED FOR SERVING UPLOADED FILES IN DEVELOPMENT
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Customer Registration</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial;padding:30px}
+.form-wrap{max-width:560px;margin:auto}
+form{border:2px solid #f1f1f1;padding:20px;border-radius:8px}
+label{display:block;margin-top:10px}
+input,textarea{width:100%;padding:10px;border:2px solid green}
+button{margin-top:15px;width:100%;padding:10px;background:#4CAF50;border:none}
+</style>
+</head>
+
+<body>
+<h2 style="text-align:center">Customer Registration</h2>
+
+<div class="form-wrap">
+<form method="post">
+{% csrf_token %}
+
+<label>Name</label>
+<input type="text" name="full_name" required>
+
+<label>Phone</label>
+<input type="text" name="phone_number" required>
+
+<label>Address</label>
+<textarea name="address" required></textarea>
+
+<label>Password</label>
+<input type="password" name="password" required>
+
+<button type="submit">Sign Up</button>
+
+<p style="text-align:center;margin-top:10px">
+<a href="{% url 'customer_login:login' %}">Login</a>
+</p>
+</form>
+</div>
+</body>
+</html>
